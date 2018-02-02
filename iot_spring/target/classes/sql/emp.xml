@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="emp">
+	<select id="selectEmp" parameterType="emp" resultType="emp">
+		select empNo, empName, empSal from emp			
+	</select>	
+	
+	<update id="updateEmp" parameterType="map">
+		update from emp 
+		set empName=#{empName},empSal=#{empSal}
+		where empNo=#{empNo}	
+	</update>
+	
+	<delete id="deleteEmp" parameterType="map">
+		delete emp where empNo=#{empNo}
+	</delete>
+	
+	<insert id="insertEmp" parameterType="emp">
+		insert into emp(empName,empSal) 
+		values(#{empName},#{empSal})
+	</insert>
+
+	
+	
+	
+</mapper>
+  
