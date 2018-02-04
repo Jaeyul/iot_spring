@@ -13,6 +13,7 @@
 <script src="${root }/resources/ui/js/bootstrap.min.js${ver}"></script>
 <link rel="stylesheet" type="text/css" href="${root }/resources/ui/css/bootstrap.min.css${ver}"/>
 <link rel="stylesheet" type="text/css" href="${root }/resources/ui/css/bootstrap-theme.min.css${ver}"/>
-<%@ include file="/WEB-INF/views/common/header.jspf" %>
-
+<link rel="stylesheet" type="text/css" href="${root }/resources/ui/css/sidemenu.css"/>    
+  
+<%@ include file="/WEB-INF/views/common/header.jspf" %>    
 

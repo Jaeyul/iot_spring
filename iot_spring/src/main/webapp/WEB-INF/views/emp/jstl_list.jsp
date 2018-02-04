@@ -8,17 +8,26 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
+
 <script>
 function moveView(id){	
 	var sub = "form" + id;	
 	document.getElementById(sub).submit();	
 }
 
-
 </script>
 
+<style>
+.h2Mid{
+	margin: 0 auto;
+}
+
+</style>
 
 <body>
+<div class="h2Mid">
+	<h2 >사원리스트</h2>
+</div>
 <div class="container">
 <table class="table table-sm table-inverse">		
 	<tr>	

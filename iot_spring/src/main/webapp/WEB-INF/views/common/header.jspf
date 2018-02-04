@@ -4,9 +4,10 @@
 
 
 
-<nav class="navbar navbar-inverse navbar-fixed-top">
+
+<nav class="navbar navbar-default navbar-fixed-top" id="test">
 <div class="container">
-	<div class="navbar-header">
+	<div class="navbar-header" >
 		<button type="button" class="navbar-toggle collapsed"
 			data-toggle="collapse" data-target="#navbar" aria-expanded="false"
 			aria-controls="navbar">
@@ -21,16 +22,44 @@
 			<li><a href="${root }/emp/list">사원리스트</a></li>
 			<li><a href="#contact">Contact</a></li>
 		</ul>
+		
+		<ul class="nav navbar-nav navbar-right">
+		    <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+		    <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+		    <li id="main">	  
+				<span style="font-size:20px;cursor:pointer" onclick="openNav()">&#9776; </span>
+			</li>
+   		</ul>		
 	</div>
 </div>
 </nav>
 
-<div class="container">
-	<br>
-	<br>
-	<br>
-	<br>
+<div id="mySidenav" class="sidenav">
+	<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+	<a href="${root }/emp/list">사원리스트</a>
+	<a href="#">Services</a>
+	<a href="#">Clients</a>
+	<a href="#">Contact</a>
 </div>
+
+
+
+<script>
+function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+    document.getElementById("main").style.marginLeft = "250px";
+    document.getElementById("test").style.display = "none";
+    document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+}
+
+function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+    document.getElementById("main").style.marginLeft= "0";
+    document.getElementById("test").style.display = "";
+    document.body.style.backgroundColor = "white";
+}
+</script>
+
 
 
 
