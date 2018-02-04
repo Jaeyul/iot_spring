@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -38,6 +39,17 @@ public class EmpController {
 		
 	}
 	
+	@RequestMapping(value="/view", method = RequestMethod.GET)	
+	public String getEmp(			
+			@RequestParam Map<String, String> map,
+			Model m) {
+		
+		logger.info("mpa=>{}", map);			
+		Emp emp = es.getEmp(map);	
+		m.addAttribute("emp",emp);		
+		return "emp/view";		
+	}		
+	
 	@RequestMapping(value="/insert", method = RequestMethod.GET)	
 	public String insertEmp(			
 			@Valid Emp empDTO, Errors er,
@@ -59,15 +71,14 @@ public class EmpController {
 			@RequestParam Map<String, String> map,
 			Model m) {
 		
-		logger.info("mpa=>{}", map);	
+		logger.info("map=>{}", map);	
 		
 		m.addAttribute("msg", "실패했슴");		
 		int result = es.deleteEmp(map);			
 		if(result != 0) {
 			m.addAttribute("msg", "올 성공ㅋ");			
-		}
-		
-		return "emp/write";		
+		}		
+		return "emp/jstl_list";		
 	}
 	
 	@RequestMapping(value="/update", method = RequestMethod.GET)	
@@ -75,9 +86,11 @@ public class EmpController {
 			@RequestParam Map<String, String> map,
 			Model m) {
 		
-		logger.info("mpa=>{}", map);		
+		logger.info("map=>{}", map);
+		
 		m.addAttribute("msg", "실패했슴");		
 		int result = es.updateEmp(map);			
+		
 		if(result != 0) {
 			m.addAttribute("msg", "올 성공ㅋ");			
 		}

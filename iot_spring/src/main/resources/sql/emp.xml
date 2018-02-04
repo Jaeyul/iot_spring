@@ -4,18 +4,23 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="emp">
-	<select id="selectEmp" parameterType="emp" resultType="emp">
+	<select id="selectEmp" parameterType="map" resultType="emp">
 		select empNo, empName, empSal from emp			
+	</select>
+	
+	<select id="selectOneEmp" parameterType="map" resultType="emp">
+		select empNo, empName, empSal from emp
+		where empNo=#{empNo}
 	</select>	
 	
 	<update id="updateEmp" parameterType="map">
-		update from emp 
+		update emp 
 		set empName=#{empName},empSal=#{empSal}
 		where empNo=#{empNo}	
 	</update>
 	
 	<delete id="deleteEmp" parameterType="map">
-		delete emp where empNo=#{empNo}
+		delete from emp where empNo=#{empNo}
 	</delete>
 	
 	<insert id="insertEmp" parameterType="emp">

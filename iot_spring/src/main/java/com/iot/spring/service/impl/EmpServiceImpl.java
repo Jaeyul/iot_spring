@@ -23,9 +23,9 @@ public class EmpServiceImpl implements EmpService {
 	}
 
 	@Override
-	public Emp getEmp() {
+	public Emp getEmp(Map<String, String> map) {
 		
-		return null;
+		return edao.selectEmp(map);
 	}
 
 	@Override
@@ -40,7 +40,8 @@ public class EmpServiceImpl implements EmpService {
 	}
 
 	@Override
-	public int updateEmp(Map<String, String> map) {
+	public int updateEmp(Map<String, String> map) {		
+		
 		
 		return edao.updateEmp(map);
 	}

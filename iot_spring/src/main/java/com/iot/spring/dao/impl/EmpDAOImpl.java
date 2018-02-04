@@ -26,9 +26,10 @@ public class EmpDAOImpl implements EmpDAO{
 	}
 
 	@Override
-	public Emp selectEmp() {
-		// TODO Auto-generated method stub
-		return null;
+	public Emp selectEmp(Map<String, String> map) {
+		SqlSession ss = ssf.openSession();
+		Emp emp = ss.selectOne("emp.selectOneEmp", map);
+		return emp;
 	}
 
 	@Override
@@ -42,7 +43,7 @@ public class EmpDAOImpl implements EmpDAO{
 	@Override
 	public int deleteEmp(Map<String, String> map) {
 		SqlSession ss = ssf.openSession();
-		int result = ss.insert("emp.deleteEmp", map);
+		int result = ss.delete("emp.deleteEmp", map);
 		ss.close();
 		return result;
 	}
@@ -50,7 +51,7 @@ public class EmpDAOImpl implements EmpDAO{
 	@Override
 	public int updateEmp(Map<String, String> map) {
 		SqlSession ss = ssf.openSession();
-		int result = ss.insert("emp.updateEmp", map);
+		int result = ss.update("emp.updateEmp", map);
 		ss.close();
 		return result;
 	}
