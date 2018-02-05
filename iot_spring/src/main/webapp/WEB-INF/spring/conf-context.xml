@@ -17,8 +17,18 @@
 	
 	<bean class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="ds"></property>
-		<property name="configLocation" value="classpath:mybatis-config.xml"/>		
-		
+		<property name="configLocation" value="classpath:mybatis-config.xml"/>				
+	</bean>
+	
+	<bean class="org.codehaus.jackson.map.ObjectMapper"></bean>
+	
+	<bean class="com.iot.spring.dao.impl.NaverTransDAOImpl">
+		<property name="clientId" value="WgitPcqXp5vWEq1bUQyn"></property>
+		<property name="clientSecret" value="mmW1UhRYF1"></property>
+		<property name="url" value="https://openapi.naver.com/v1/language/translate"></property>
+		<property name="contentType" value="application/x-www-form-urlencoded; charset=UTF-8"></property>	
+		<property name="source" value="en"></property>
+		<property name="target" value="ko"></property>
 	</bean>
 	
 </beans>

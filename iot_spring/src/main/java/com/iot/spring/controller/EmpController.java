@@ -8,13 +8,13 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.iot.spring.service.EmpService;
 import com.iot.spring.vo.Emp;
@@ -51,19 +51,21 @@ public class EmpController {
 	}		
 	
 	@RequestMapping(value="/insert", method = RequestMethod.GET)	
-	public String insertEmp(			
+	public ModelAndView insertEmp(			
 			@Valid Emp empDTO, Errors er,
-			Model m) {
+			ModelAndView m) throws Exception {		
+		logger.info("insert result => {}", empDTO);	
 		
 		if(er.hasErrors()) {
 			logger.info("error => {}", er);
-			m.addAttribute("errorMsg",er.getAllErrors());
-			return "error/error";			
+			throw new Exception(er.getAllErrors().get(0).getDefaultMessage());		
+			
 		}
-		logger.info("insert result => {}", empDTO);
-		es.insertEmp(empDTO);
 		
-		return "emp/write";		
+		int result = es.insertEmp(empDTO);			
+			
+		m.setViewName("emp/write");		
+		return m;		
 	}
 	
 	@RequestMapping(value="/delete", method = RequestMethod.GET)	

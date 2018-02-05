@@ -45,7 +45,9 @@ function updateEmp(){
 
 </script>
 
-<body>
+<body><div>
+<br><br><br><br><br>
+</div>
 
 <input type="button" value="revise" onclick="reviseEmp()">
 <table class="table table-sm table-inverse">		

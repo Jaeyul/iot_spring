@@ -17,18 +17,14 @@ function moveView(id){
 
 </script>
 
-<style>
-.h2Mid{
-	margin: 0 auto;
-}
-
-</style>
-
 <body>
-<div class="h2Mid">
-	<h2 >사원리스트</h2>
+<div>
+<br><br><br><br><br>
 </div>
+
 <div class="container">
+<h2 >사원리스트</h2>
+<br>
 <table class="table table-sm table-inverse">		
 	<tr>	
 		<th>번호</th>

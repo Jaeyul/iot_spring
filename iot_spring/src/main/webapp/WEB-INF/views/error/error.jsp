@@ -7,11 +7,13 @@
 <title>Insert title here</title>
 </head>
 <body>
+<div>
+<br><br><br><br><br>
+</div>
+
 <h2>Error List</h2>
 
-<c:forEach items="${errorMsg }" var="oe">
-	${oe }<br>
-</c:forEach>
+${errorMsg.message.result.translatedText}
 
 
 </body>
