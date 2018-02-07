@@ -1,5 +1,6 @@
 package com.iot.spring.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +15,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.iot.spring.service.EmpService;
@@ -30,14 +32,20 @@ public class EmpController {
 	
 	@RequestMapping(value= "/list", method = RequestMethod.GET)
 	public String getEmpList(Model m) {
-		List<Emp> empList = es.getEmpList();
-		
-		
-		m.addAttribute("empList", empList);
-		
-		return "emp/jstl_list";
-		
+		List<Emp> empList = es.getEmpList();		
+		m.addAttribute("empList", empList);		
+		return "emp/jstl_list";		
 	}
+	
+	@RequestMapping(value= "/lista", method = RequestMethod.GET)
+	public @ResponseBody Map<String,Object> getEmpListAjax(Model m) {
+		List<Emp> empList = es.getEmpList();	
+		Map<String,Object> empMap = new HashMap<String,Object>();
+		empMap.put("empList", empList);
+		
+		return empMap;		
+	}
+	
 	
 	@RequestMapping(value="/view", method = RequestMethod.GET)	
 	public String getEmp(			
@@ -58,10 +66,8 @@ public class EmpController {
 		
 		if(er.hasErrors()) {
 			logger.info("error => {}", er);
-			throw new Exception(er.getAllErrors().get(0).getDefaultMessage());		
-			
-		}
-		
+			throw new Exception(er.getAllErrors().get(0).getDefaultMessage());			
+		}		
 		int result = es.insertEmp(empDTO);			
 			
 		m.setViewName("emp/write");		

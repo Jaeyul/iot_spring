@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.iot.spring.dao.EmpDAO;
@@ -14,6 +15,7 @@ import com.iot.spring.vo.Emp;
 @Repository
 public class EmpDAOImpl implements EmpDAO{
 	@Autowired
+	@Qualifier("mb")
 	private SqlSessionFactory ssf;
 	
 
