@@ -11,8 +11,11 @@
 
 	<typeAliases>
 		<typeAlias alias="emp" type="com.iot.spring.vo.Emp"/>		
-		<typeAlias alias="user" type="com.iot.spring.vo.UserInfo"/>		
+		<typeAlias alias="user" type="com.iot.spring.vo.UserInfo"/>	
+		<typeAlias alias="uvo" type="com.iot.spring.vo.UserInfoVO"/>		
 		<typeAlias alias="ci" type="com.iot.spring.vo.ConnectionInfoVO"/>		
+		<typeAlias alias="tvo" type="com.iot.spring.vo.TableVO"/>	
+		<typeAlias alias="cvo" type="com.iot.spring.vo.ColumnsVO"/>	
 	</typeAliases>
 	
 	<mappers>

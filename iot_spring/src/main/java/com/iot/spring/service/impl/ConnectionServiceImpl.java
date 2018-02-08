@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 
 import com.iot.spring.dao.ConnectionDAO;
 import com.iot.spring.service.ConnectionService;
+import com.iot.spring.vo.ColumnsVO;
 import com.iot.spring.vo.ConnectionInfoVO;
+import com.iot.spring.vo.TableVO;
 
 @Service
 public class ConnectionServiceImpl implements ConnectionService {
@@ -35,6 +37,31 @@ public class ConnectionServiceImpl implements ConnectionService {
 		if(result!=0) {
 			rMap.put("msg", "성공");
 		}			
+	}
+
+	@Override
+	public List<Map<String, Object>> getDatabaseList() {
+		List<Map<String, Object>> dbList = cdao.selectDatabaseList();
+		int idx = 0;
+		for(Map<String,Object> dbMap : dbList) {
+			dbMap.put("id", ++idx);
+			dbMap.put("text", dbMap.get("Database"));	
+			dbMap.put("items", new Object[] {});
+		}		
+		
+		return dbList;
+	}
+
+	@Override
+	public List<TableVO> getTableList(String dbName) {
+		
+		return cdao.selectTableList(dbName);
+	}
+
+	@Override
+	public List<ColumnsVO> getColumnsList(Map<String, String> rMap) {
+		
+		return cdao.selectColumnsList(rMap);
 	}
 
 }

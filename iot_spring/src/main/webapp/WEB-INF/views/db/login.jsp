@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -27,9 +27,9 @@ div#winVP {
 	$(document).ready(function(){
 		winF = new dhtmlXWindows();
 		winF.attachViewportTo("winVP");
-		popW = winF.createWindow("win1",350,30,400,500);
+		popW = winF.createWindow("win1",350,30,400,400);
 		
-		popW.setText("Add Connection Info");
+		popW.setText("Login");
 		
 		var formObj = [];
 		//var setting = {type:"settings", position:"label-left", labelWidth:100, inputwidth:120};
@@ -41,20 +41,15 @@ div#winVP {
 				]		
 		};*/
 		
-		var formObj = [{type:"settings", offsetTop:12, name:"connectionInfo", labelAlign:"left"},				
-			{type:"input", name:"ciName", label:"커넥션", required:true},
-			{type:"input", name:"ciUrl", label:"접속URL", required:true},
-			{type:"input", name:"ciPort", label:"포트번호", vaildate:"ValidInteger", required:true},
-			{type:"input", name:"ciDatabase", label:"데이터베이스", required:true},
-			{type:"input", name:"ciUser", label:"유저아이디", required:true},
-			{type:"password", name:"ciPwd", label:"비밀번호", required:true},
-			{type:"input", name:"uiId", label:"아이디",required:true},
-			{type:"input", name:"ciEtc", label:"설명"},
+		var formObj = [{type:"settings", offsetTop:12, name:"Login", labelAlign:"left"},				
+			
+			{type:"input", name:"uiID", label:"접속URL", required:true},
+			{type:"input", name:"uiPwd", label:"포트번호", vaildate:"ValidInteger", required:true},				
 			
 			{type:"block", blockOffset:0, list:[
-				{type:"button", name:"saveBtn", value:"저장"},
+				{type:"button", name:"login", value:"Login"},				
 				{type:"newcolumn"},
-				{type:"button", name:"cancelBtn", value:"취소"}
+				{type:"button", name:"signUpBtn", value:"회원가입"}
 			]}
 						
 		];
@@ -74,12 +69,12 @@ div#winVP {
 		var form = popW.attachForm(formObj,true);
 		
 		form.attachEvent("onButtonClick", function(id){
-			if(id=="saveBtn"){
+			if(id=="login"){
 				if(form.validate()){
-					form.send("${root}/connection/insert","POST", callback);					
+					alert("ㅋㅋ");					
 				}				
-			}else if(id=="cancelBtn"){
-				form.clear();
+			}else if(id=="signUpBtn"){
+				document.location.href="${root }/path/db/signup";
 			}
 		});		
 		

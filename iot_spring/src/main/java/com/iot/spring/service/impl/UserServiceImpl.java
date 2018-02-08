@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.iot.spring.dao.UserDAO;
 import com.iot.spring.service.UserService;
 import com.iot.spring.vo.UserInfo;
+import com.iot.spring.vo.UserInfoVO;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -17,7 +18,7 @@ public class UserServiceImpl implements UserService {
 	
 
 	@Override
-	public List<UserInfo> getUserList() {
+	public List<UserInfoVO> getUserList() {
 		
 		return udao.selectUserList();
 	}
@@ -27,12 +28,18 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
 	@Override
-	public int insertEmp(UserInfo user) {
-		// TODO Auto-generated method stub
-		return 0;
+	public void insertUser(UserInfoVO ui, Map<String, Object> rMap) {
+		
+		int result = udao.insertUser(ui);
+		rMap.put("msg", "실패");
+		if(result!=0) {
+			rMap.put("msg", "성공");
+		}			
+		
 	}
+	
 
 	@Override
 	public int deleteEmp(Map<String, String> map) {
@@ -45,5 +52,7 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	
 
 }

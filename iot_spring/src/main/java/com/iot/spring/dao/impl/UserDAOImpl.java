@@ -11,22 +11,22 @@ import org.springframework.stereotype.Repository;
 
 import com.iot.spring.dao.UserDAO;
 import com.iot.spring.vo.UserInfo;
+import com.iot.spring.vo.UserInfoVO;
 
 @Repository
 public class UserDAOImpl implements UserDAO {
 	@Autowired
-	@Qualifier("mb")
+	@Qualifier("cmb")
 	private SqlSessionFactory ssf;
 
 	@Override
-	public List<UserInfo> selectUserList() {
+	public List<UserInfoVO> selectUserList() {
 		SqlSession ss = ssf.openSession();
-		List<UserInfo> userList = ss.selectList("user.selectUser");
+		List<UserInfoVO> userList = ss.selectList("user.selectUser");
 		ss.close();
 		return userList;
 		
 	}
-
 
 	@Override
 	public UserInfo selectUser(Map<String, String> map) {
@@ -34,24 +34,27 @@ public class UserDAOImpl implements UserDAO {
 		return null;
 	}
 
+	@Override
+	public int insertUser(UserInfoVO ui) {
+		int result = 0;
+		SqlSession ss = ssf.openSession();
+		result = ss.insert("user.insertUser", ui);
+		return result;
+	}
 
 	@Override
-	public int insertEmp(UserInfo user) {
+	public int deleteUser(Map<String, String> map) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public int deleteEmp(Map<String, String> map) {
+	public int updateUser(Map<String, String> map) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	@Override
-	public int updateEmp(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+
 
 
 

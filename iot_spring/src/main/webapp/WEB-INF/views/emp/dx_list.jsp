@@ -17,7 +17,7 @@
 	
 	<script>
 	var mygrid = new dhtmlXGridObject('gridbox');
-	mygrid.setImagePath("{dPath}/imgs/");                 
+	mygrid.setImagePath("${dPath}/imgs/");                 
 	mygrid.setHeader("사번,이름,월급");//the headers of columns  
 	mygrid.setInitWidths("80,140,100");          //the widths of columns  
 	mygrid.setColAlign("left,left,left");       //the alignment of columns   

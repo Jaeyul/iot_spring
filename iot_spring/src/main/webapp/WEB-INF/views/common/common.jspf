@@ -6,7 +6,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%String rootPath = request.getContextPath();%>
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
-<c:set var="rPath" value="${root}/resource"></c:set>
+<c:set var="rPath" value="${root}/resources"></c:set>
 <c:set var="dPath" value="${rPath }/dx"></c:set>
 <c:set var="ver" value="?version=1.0.0"/>
 <script src="${root }/resources/ui/js/jquery-3.2.1.js${ver}"></script>

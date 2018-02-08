@@ -23,48 +23,79 @@
 </style>
 
 <script>
-var formObj = [{type:"settings", offsetTop:12, name:"connectionInfo", labelAlign:"left"},				
-	{type:"input", name:"uName", label:"커넥션", required:true},
-	{type:"input", name:"uID", label:"접속URL", required:true},
-	{type:"input", name:"uPWD", label:"포트번호", vaildate:"ValidInteger", required:true},
-	{type:"input", name:"uEmali", label:"데이터베이스", required:true},	
-	{type:"block", blockOffset:0, list:[
-		{type:"button", name:"saveBtn", value:"저장"},
-		{type:"newcolumn"},
-		{type:"button", name:"cancelBtn", value:"취소"}
-	]}				
-];
-var bodyLayout;
+
+var bodyLayout, mygrid,
+	aLay, bLay,
+	dbTree;
+
+function callback(res){
+	console.log(res.dbList);
+	dbTree = aLay.attachTreeView({
+		items: res.dbList
+	});
+	dbTree.setImagePath("${rPath}/dx/skins/web/imgs/dhxtree_web");	
+	dbTree.enableDragAndDrop(true);
+	
+}
+
+function listCallback(res){	
+	console.log(res.userList);					
+	mygrid.parse({data:res.userList}, "js");				
+}
 
 dhtmlxEvent(window,"load",function(){
 	bodyLayout = new dhtmlXLayoutObject(document.body,"3L");
-	bodyLayout.cells("a").setWidth(400);
-	bodyLayout.cells("a").setText("Connection Info List");
+	aLay = bodyLayout.cells("a");	
+	aLay.setWidth(400);
+	aLay.setText("Connection Info List");
+	var aToolbar = aLay.attachToolbar();
+	   aToolbar.addButton("adddb",1,"add Connector");
+	   aToolbar.addButton("condb",2,"Connection");
+	   aToolbar.attachEvent("onClick",function(id){
+	      if(id=="adddb"){
+	    	  document.location.href="${root }/path/db/dx_form";	    	  
+	      }	      
+	   })
 	
-	bodyLayout.cells("c").attachForm(formObj,true);	
+	var au = new AjaxUtil("${root}/connection/db_list",null,"GET","json")
+	au.setCallbackSuccess(callback)
+	au.send();
 	
-	bodyLayout.cells("b").attachGrid({
-	    image_path:'codebase/imgs/',
-	    columns: [{
-	        label: "Column A",
-	        width: 100,
-	        type: "ro",
-	        sort: "int",
-	        align: "right"
-	    },{
-	        label: "Column B",
-	        width: 250,
-	        type: "ed",
-	        sort: "str",
-	        align: "left"
-	    }],
-	    multiselect: true,
-	
-	});
-
-	
+	bLay = bodyLayout.cells("b");	
+	var bToolbar = bLay.attachToolbar();
+		bToolbar.addButton("ui",1,"UserInfo");
+		bToolbar.addButton("ci",2,"ConnectionInfo");
+		bToolbar.attachEvent("onClick",function(id){
+			if(id=="ui"){
+				mygrid = bLay.attachGrid(); 
+				mygrid.setImagePath("${dPath}/imgs/");                 
+				mygrid.setHeader("번호,이름,아이디,비밀번호,이메일,권리자권한");
+				mygrid.setInitWidths("80,150,150,150,250,150");          
+				mygrid.setColAlign("left,left,left,left,left,left");       
+				mygrid.setColTypes("ro,ed,ed,ed,ed,ed");               
+				mygrid.setColSorting("int,str,str,str,str,int");          
+				mygrid.setColumnIds("uiNo,uiName,uiID,uiPwd,uiEmail,admin");
+				mygrid.init();    
+				
+				var au2 = new AjaxUtil("${root}/user/list",null,"GET","json");	
+			
+				au2.setCallbackSuccess(listCallback)
+				au2.send(); 		
+				
+		    }else if(id=="ci"){
+		    	alert("된당");
+		    	
+		    }	      
+		})
+		
 		
 	
+		
+		
+		
+		
+			
+		
 	
 	
 });

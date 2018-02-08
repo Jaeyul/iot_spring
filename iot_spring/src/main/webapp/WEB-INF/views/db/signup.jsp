@@ -29,7 +29,7 @@ div#winVP {
 		winF.attachViewportTo("winVP");
 		popW = winF.createWindow("win1",350,30,400,500);
 		
-		popW.setText("Add Connection Info");
+		popW.setText("Add User Info");
 		
 		var formObj = [];
 		//var setting = {type:"settings", position:"label-left", labelWidth:100, inputwidth:120};
@@ -42,14 +42,11 @@ div#winVP {
 		};*/
 		
 		var formObj = [{type:"settings", offsetTop:12, name:"connectionInfo", labelAlign:"left"},				
-			{type:"input", name:"ciName", label:"커넥션", required:true},
-			{type:"input", name:"ciUrl", label:"접속URL", required:true},
-			{type:"input", name:"ciPort", label:"포트번호", vaildate:"ValidInteger", required:true},
-			{type:"input", name:"ciDatabase", label:"데이터베이스", required:true},
-			{type:"input", name:"ciUser", label:"유저아이디", required:true},
-			{type:"password", name:"ciPwd", label:"비밀번호", required:true},
-			{type:"input", name:"uiId", label:"아이디",required:true},
-			{type:"input", name:"ciEtc", label:"설명"},
+			{type:"input", name:"uiName", label:"이름", required:true},
+			{type:"input", name:"uiID", label:"아이디", required:true},
+			{type:"input", name:"uiPwd", label:"패스워드", vaildate:"ValidInteger", required:true},
+			{type:"input", name:"uiEmail", label:"이메일", required:true},
+			{type:"input", name:"admin", label:"관리자권한설정", required:true},		
 			
 			{type:"block", blockOffset:0, list:[
 				{type:"button", name:"saveBtn", value:"저장"},
@@ -76,7 +73,8 @@ div#winVP {
 		form.attachEvent("onButtonClick", function(id){
 			if(id=="saveBtn"){
 				if(form.validate()){
-					form.send("${root}/connection/insert","POST", callback);					
+					
+					form.send("${root}/user/insert","POST", callback);					
 				}				
 			}else if(id=="cancelBtn"){
 				form.clear();

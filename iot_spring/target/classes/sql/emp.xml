@@ -28,7 +28,7 @@
 		values(#{empName},#{empSal})
 	</insert>
 
-	
+	 
 	
 	
 </mapper>
