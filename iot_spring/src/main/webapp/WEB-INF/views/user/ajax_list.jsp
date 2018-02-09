@@ -8,7 +8,7 @@
 </head>
 <script>
 $(document).ready(function(){
-	var au = new AjaxUtil("${root}/user/list",null,"GET","json");
+	var au = new AjaxUtil("${root}/user/lista",null,"GET","json");
 
 	function callback(res){	
 		alert(res.msg);

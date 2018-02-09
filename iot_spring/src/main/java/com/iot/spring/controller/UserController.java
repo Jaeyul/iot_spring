@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+
 import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,8 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.iot.spring.service.UserService;
-import com.iot.spring.vo.ConnectionInfoVO;
-import com.iot.spring.vo.UserInfo;
 import com.iot.spring.vo.UserInfoVO;
 
 @Controller
@@ -32,7 +33,7 @@ public class UserController {
 	private UserService us;
 	
 	
-	@RequestMapping(value= "/list", method = RequestMethod.GET)
+	@RequestMapping(value= "/lista", method = RequestMethod.GET)
 	public @ResponseBody Map<String,Object> getUserListAjax(Model m) {
 		List<UserInfoVO> userList = us.getUserList();	
 		Map<String,Object> userMap = new HashMap<String,Object>();
@@ -42,7 +43,7 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/insert", method=RequestMethod.POST)
-	public @ResponseBody Map<String, Object> ConnectionInsert(@RequestParam Map<String, Object> map) {
+	public @ResponseBody Map<String, Object> UserInsert(@RequestParam Map<String, Object> map) {
 		UserInfoVO ui = om.convertValue(map, UserInfoVO.class); 
 		log.info("UserInfoVO => {}", ui);
 		log.info("Map => {}", map);
@@ -50,6 +51,77 @@ public class UserController {
 		
 		return map;
 	}
+	
+	@RequestMapping(value="/delete", method=RequestMethod.POST)
+	public @ResponseBody Map<String, Object> UserDelete(@RequestParam Map<String, Object> map) {
+		UserInfoVO ui = om.convertValue(map, UserInfoVO.class); 
+		log.info("UserInfoVO => {}", ui);
+		log.info("Map => {}", map);
+		us.deleteUser(ui, map);
+		
+		return map;
+	}
+	
+	@RequestMapping(value="/update", method=RequestMethod.POST)
+	public @ResponseBody Map<String, Object> UserUpdate(@RequestParam Map<String, Object> map) {
+		UserInfoVO ui = om.convertValue(map, UserInfoVO.class); 
+		log.info("UserInfoVO => {}", ui);
+		log.info("Map => {}", map);
+		us.updateUser(ui, map);
+		
+		return map;
+	}
+	
+	@RequestMapping(value="/login")
+	public @ResponseBody Map<String, Object> login(@Valid UserInfoVO ui, HttpSession hs){
+//		log.info("Before Login HttpSession => {}", hs.getAttribute("user"));		
+//		hs.setAttribute("user", ui);
+//		hs.setAttribute("isLogin", true);
+//		log.info("After Login HttpSession => {}", hs.getAttribute("user"));		
+		Map<String,Object> map = new HashMap<String,Object>();
+		ui=us.getUserInfo(ui);		
+		log.info("us.getUserInfo(ui) => {}", ui);
+		map.put("loginOk", false);
+		map.put("msg","로그인실패");
+		if(ui!=null) {
+			map.put("loginOk", true);
+			map.put("msg","로그인성공");
+			
+			hs.setAttribute("user", ui);
+			hs.setAttribute("isLogin", true);
+		}		
+		return map;
+	}
+	
+	@RequestMapping(value="/logout", method=RequestMethod.GET)
+	public String logout(HttpSession hs){
+//		log.info("Before Login HttpSession => {}", hs.getAttribute("user"));		
+//		hs.setAttribute("user", ui);
+//		hs.setAttribute("isLogin", true);
+//		log.info("After Login HttpSession => {}", hs.getAttribute("user"));		
+		hs.removeAttribute("user");	
+		hs.removeAttribute("isLogin");	
+		return "index";
+	}
+	
+	
+	
+	@RequestMapping(value="/signup", method=RequestMethod.POST)
+	public @ResponseBody Map<String, Object> signup(@Valid UserInfoVO ui, HttpSession hs){
+//	
+		Map<String,Object> map = new HashMap<String,Object>();
+		us.insertUser(ui, map);
+		
+		return map;
+	}
+	
+	@RequestMapping(value="/list", method=RequestMethod.GET)
+	public @ResponseBody List<UserInfoVO> getUserList(){		
+		
+		return us.getUserList();
+	}
+	
+	
 	
 
 }

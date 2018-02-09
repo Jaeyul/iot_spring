@@ -32,9 +32,10 @@ $(document).ready(
 			<li><a href="${root }/path/db/main">SQL</a></li>
 		</ul>
 		
+		
 		<ul class="nav navbar-nav navbar-right" id="test3">
 		    <li><a href="${root }/path/db/signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-		    <li><a href="${root }/path/db/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+		    <li><a href="${root }${(Log=='login')? '/path/user/index':'/user/logout'}"><span class="glyphicon glyphicon-log-in"></span> ${(Log=='login')?'Login':'Logout'} </a></li>
 		    <li id="main">	  
 				<span style="font-size:20px;cursor:pointer" onclick="openNav()">&#9776; </span>
 			</li>
@@ -79,7 +80,7 @@ function visible(){
 	document.getElementById("test2").style.visibility = "visible";	
 	document.getElementById("test3").style.visibility = "visible";	
 }
-
+<%=3+5%>
 </script>
 
 

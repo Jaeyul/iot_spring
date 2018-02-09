@@ -27,11 +27,11 @@ div#winVP {
 	$(document).ready(function(){
 		winF = new dhtmlXWindows();
 		winF.attachViewportTo("winVP");
-		popW = winF.createWindow("win1",350,30,400,500);
-		
+		popW = winF.createWindow("win1",350,30,400,500);		
 		popW.setText("Add Connection Info");
 		
-		var formObj = [];
+		
+		
 		//var setting = {type:"settings", position:"label-left", labelWidth:100, inputwidth:120};
 		/*var inputs = {type:"fieldset", offsetTop:12, name:"connectionInfo", inputWidth:"auto",
 				list:[
@@ -41,7 +41,7 @@ div#winVP {
 				]		
 		};*/
 		
-		var formObj = [{type:"settings", offsetTop:12, name:"connectionInfo", labelAlign:"left"},				
+		var insertFormObj = [{type:"settings", offsetTop:12, name:"connectionInfo", labelAlign:"left"},				
 			{type:"input", name:"ciName", label:"커넥션", required:true},
 			{type:"input", name:"ciUrl", label:"접속URL", required:true},
 			{type:"input", name:"ciPort", label:"포트번호", vaildate:"ValidInteger", required:true},
@@ -55,9 +55,10 @@ div#winVP {
 				{type:"button", name:"saveBtn", value:"저장"},
 				{type:"newcolumn"},
 				{type:"button", name:"cancelBtn", value:"취소"}
-			]}
-						
+			]}		
 		];
+		
+			
 		//formObj.push(setting);
 		
 		/*var tt = [
@@ -71,7 +72,7 @@ div#winVP {
 		//formObj.push(inputs);
 		//popW.attachForm(formObj,true);
 		
-		var form = popW.attachForm(formObj,true);
+		var form = popW.attachForm(insertFormObj,true);
 		
 		form.attachEvent("onButtonClick", function(id){
 			if(id=="saveBtn"){

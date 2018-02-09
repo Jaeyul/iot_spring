@@ -29,10 +29,12 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public UserInfo selectUser(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return null;
+	public UserInfoVO selectUser(UserInfoVO ui) {
+		SqlSession ss = ssf.openSession();
+		UserInfoVO uiv = ss.selectOne("user.selectUser", ui);
+		return uiv;
 	}
+
 
 	@Override
 	public int insertUser(UserInfoVO ui) {
@@ -43,16 +45,32 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public int deleteUser(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int deleteUser(UserInfoVO ui) {
+		int result = 0;
+		SqlSession ss = ssf.openSession();
+		result = ss.delete("user.updateUser", ui);
+		return result;
 	}
 
 	@Override
-	public int updateUser(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int updateUser(UserInfoVO ui) {
+		int result = 0;
+		SqlSession ss = ssf.openSession();
+		result = ss.update("user.updateUser", ui);
+		return result;
 	}
+
+	@Override
+	public int checkUser(UserInfoVO ui) {
+		int result = 0;
+		SqlSession ss = ssf.openSession();
+		result = ss.selectOne("user.checkUser", ui);
+		return result;
+	}
+
+
+
+
 
 
 

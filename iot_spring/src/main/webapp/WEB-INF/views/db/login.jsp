@@ -27,7 +27,11 @@ div#winVP {
 	$(document).ready(function(){
 		winF = new dhtmlXWindows();
 		winF.attachViewportTo("winVP");
-		popW = winF.createWindow("win1",350,30,400,400);
+		popW = winF.createWindow("win1",20,30,350,400);
+		popW.button("close").hide()
+		popW.button("minmax").hide()
+		popW.button("park").hide()
+		
 		
 		popW.setText("Login");
 		
@@ -41,11 +45,9 @@ div#winVP {
 				]		
 		};*/
 		
-		var formObj = [{type:"settings", offsetTop:12, name:"Login", labelAlign:"left"},				
-			
-			{type:"input", name:"uiID", label:"접속URL", required:true},
-			{type:"input", name:"uiPwd", label:"포트번호", vaildate:"ValidInteger", required:true},				
-			
+		var formObj = [{type:"settings", offsetTop:12, name:"Login", labelAlign:"left"},			
+			{type:"input", name:"uiID", label:"아이디", required:true},
+			{type:"input", name:"uiPwd", label:"비밀번호", vaildate:"ValidInteger", required:true},			
 			{type:"block", blockOffset:0, list:[
 				{type:"button", name:"login", value:"Login"},				
 				{type:"newcolumn"},

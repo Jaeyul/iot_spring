@@ -77,10 +77,12 @@ dhtmlxEvent(window,"load",function(){
 				mygrid.setColumnIds("uiNo,uiName,uiID,uiPwd,uiEmail,admin");
 				mygrid.init();    
 				
-				var au2 = new AjaxUtil("${root}/user/list",null,"GET","json");	
+				var au2 = new AjaxUtil("${root}/user/lista",null,"GET","json");	
 			
 				au2.setCallbackSuccess(listCallback)
 				au2.send(); 		
+				
+				
 				
 		    }else if(id=="ci"){
 		    	alert("된당");

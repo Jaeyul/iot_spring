@@ -22,37 +22,56 @@ public class UserServiceImpl implements UserService {
 		
 		return udao.selectUserList();
 	}
-
+	
 	@Override
-	public UserInfo getUser(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return null;
+	public UserInfoVO getUserInfo(UserInfoVO ui) {
+		
+		return udao.selectUser(ui);
+	}
+	
+	private boolean isDuplUserInfo(UserInfoVO ui) {
+		if(udao.checkUser(ui)!=0) {
+			return true;			
+		}
+		return false;
 	}
 	
 	@Override
-	public void insertUser(UserInfoVO ui, Map<String, Object> rMap) {
-		
+	public void insertUser(UserInfoVO ui, Map<String, Object> rMap) {		
+		int result = 0;		
+		rMap.put("msg", "회원가입에 실패하였습니다.");
+		if(isDuplUserInfo(ui)) {
+			rMap.put("msg", ui.getUiID() + "는 이미 존재하는 아이디입니다.");
+			return;
+		}
+		result = udao.insertUser(ui);
+		if(result!=0) {
+			rMap.put("msg", "회원가입에 성공하셨습니다.");
+			rMap.put("signupOk", true);
+		}	
+	}
+
+	@Override
+	public void deleteUser(UserInfoVO ui, Map<String, Object> rMap) {
 		int result = udao.insertUser(ui);
 		rMap.put("msg", "실패");
 		if(result!=0) {
 			rMap.put("msg", "성공");
 		}			
-		
 	}
+
+	@Override
+	public void updateUser(UserInfoVO ui, Map<String, Object> rMap) {
+		int result = udao.insertUser(ui);
+		rMap.put("msg", "실패");
+		if(result!=0) {
+			rMap.put("msg", "성공");
+		}			
+	}
+
+
+
 	
-
-	@Override
-	public int deleteEmp(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int updateEmp(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
 	
 
 }
