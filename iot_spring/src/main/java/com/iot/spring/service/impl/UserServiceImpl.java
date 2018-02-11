@@ -53,19 +53,23 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void deleteUser(UserInfoVO ui, Map<String, Object> rMap) {
-		int result = udao.insertUser(ui);
+		int result = udao.deleteUser(ui);
 		rMap.put("msg", "실패");
+		rMap.put("deleteOk", false);
 		if(result!=0) {
 			rMap.put("msg", "성공");
+			rMap.put("deleteOk", true);
 		}			
 	}
 
 	@Override
 	public void updateUser(UserInfoVO ui, Map<String, Object> rMap) {
-		int result = udao.insertUser(ui);
+		int result = udao.updateUser(ui);
 		rMap.put("msg", "실패");
+		rMap.put("updateOk", false);
 		if(result!=0) {
 			rMap.put("msg", "성공");
+			rMap.put("updateOk", true);
 		}			
 	}
 

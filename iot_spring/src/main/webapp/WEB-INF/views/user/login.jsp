@@ -33,17 +33,22 @@ div#winVP {
       winF.window("win1").denyMove();
       winF.window("win1").denyResize();
       var formObj = [
-                 {type:"settings", offsetTop:12,name:"connectionInfo",labelAlign:"left"},
-               {type:"input",name:"uiID", label:"아이디 : ",required:true},
-               {type:"password",name:"uiPwd", label:"비밀번호 : ",required:true},
-               {type: "block", blockOffset: 0, list: [
-                  {type: "button", name:"loginBtn",value: "로그인"},
-                  {type: "newcolumn"},
-                  {type: "button", name:"cancelBtn",value: "취소"},
-                  {type: "newcolumn"},
-                  {type: "button", name:"signupBtn",value: "회원가입"}
-               ]}
-         ];
+				{type:"settings", offsetTop:12,name:"connectionInfo",labelAlign:"left"},
+				
+				{type:"label",name:"label", label:"", list : [
+					{type:"input",name:"uiID", label:"아이디 : ",required:true},
+					{type:"password",name:"uiPwd", label:"비밀번호 : ",required:true}
+				]},				
+				{type:"label",name:"label", label:"", list : [
+					{type: "block", blockOffset: 0, list: [
+						{type: "button", name:"loginBtn",value: "로그인"},
+						{type: "newcolumn"},
+						{type: "button", name:"cancelBtn",value: "취소"},
+						{type: "newcolumn"},
+						{type: "button", name:"signupBtn",value: "회원가입"}
+					]}
+				]}				
+		];
       var form = popW.attachForm(formObj,true);
       
       form.attachEvent("onButtonClick",function(id){
@@ -71,26 +76,7 @@ div#winVP {
 			if(res.loginOk){
 				popW.hide();
 				
-				var mygrid = new dhtmlXGridObject('winVP');
-				mygrid.setImagePath("${dPath}/imgs/");                 
-				mygrid.setHeader("번호,이름,아이디,비밀번호,이메일,권리자권한");
-				mygrid.setInitWidths("80,150,150,150,250,150");          
-				mygrid.setColAlign("left,left,left,left,left,left");       
-				mygrid.setColTypes("ro,ed,ed,ed,ed,ed");               
-				mygrid.setColSorting("int,str,str,str,str,int");          
-				mygrid.setColumnIds("uiNo,uiName,uiID,uiPwd,uiEmail,admin");
-				mygrid.init();    
-				
-				var au2 = new AjaxUtil("${root}/user/list",null,"GET","json");	
-				
-				function listCallback(res){	
-					console.log(res.userList);
-					
-					mygrid.parse({data:res}, "js");				
-				}
-				
-				au2.setCallbackSuccess(listCallback)
-				au2.send(); 		
+				document.location.href="${root}/path/user/list";
 				
 				
 			}		   

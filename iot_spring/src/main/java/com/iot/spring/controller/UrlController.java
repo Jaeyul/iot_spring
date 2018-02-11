@@ -42,10 +42,7 @@ public class UrlController {
 		String uri = request.getRequestURI();
 		String rootPath = request.getContextPath();
 		uri = getUri(uri, rootPath);		
-		logger.info("path =>{}", uri);		
-		
-		
-		
+		logger.info("path =>{}", uri);			
 		return uri;
 	}
 	

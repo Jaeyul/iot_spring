@@ -36,6 +36,7 @@ var AjaxUtilDx = function (url, dxObj, type, dataType){
 		}
 		this.param = JSON.stringify(initData);
 	}
+	
 	this.type = type?type:"POST";
 	this.dataType = dataType?dataType:"json";
 	this.callbackSuccess = function(json){
@@ -79,8 +80,8 @@ var AjaxUtil = function (url, params, type, dataType){
 		return null;
 	}
 	this.url = url;
-	var initData = {}
 	
+	var initData = {}	
 	this.param = JSON.stringify(initData);
 	if(params){
 		var paramArr = params.split(",");

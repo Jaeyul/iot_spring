@@ -48,7 +48,7 @@ public class UserDAOImpl implements UserDAO {
 	public int deleteUser(UserInfoVO ui) {
 		int result = 0;
 		SqlSession ss = ssf.openSession();
-		result = ss.delete("user.updateUser", ui);
+		result = ss.delete("user.deleteUser", ui);
 		return result;
 	}
 

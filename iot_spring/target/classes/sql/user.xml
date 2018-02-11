@@ -13,6 +13,7 @@
 		<if test="uiPwd!=null">
 			and uiPwd=#{uiPwd}
 		</if>
+		
 	</select>	
 	
 	<select id="checkUser" parameterType="uvo" resultType="int">
@@ -21,14 +22,14 @@
 	</select>	
 
 
-	<update id="updateUser" parameterType="map">
-		update from user_info 
+	<update id="updateUser" parameterType="uvo">
+		update user_info 
 		set uiName=#{uiName},uiID=#{uiID},uiPwd=#{uiPwd},uiEmail=#{uiEmail},admin=#{admin} 
 		where uiNo=#{uiNo}	
 	</update>
 	
-	<delete id="deleteUser" parameterType="map">
-		delete user_info where uino=#{uiNo}
+	<delete id="deleteUser" parameterType="uvo">
+		delete from user_info where uiNo=#{uiNo}
 	</delete>
 	
 	<insert id="insertUser" parameterType="uvo">

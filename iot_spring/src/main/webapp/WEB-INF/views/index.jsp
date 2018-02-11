@@ -16,86 +16,61 @@ div#winVP {
 	margin: 10px;
 }
 </style>
-<script>
-   var winF,popW;
-   $(document).ready(function(){
-	  
-      winF = new dhtmlXWindows();
-      winF.attachViewportTo("winVP");
-      popW = winF.createWindow("win1",20,30,320,300);
-      //popW.hide(); 
-      popW.button("close").hide();
-      popW.button("minmax").hide();
-      popW.button("park").hide();
-      popW.setText("Login"); 
 
-      winF.window("win1").centerOnScreen();
-      winF.window("win1").denyMove();
-      winF.window("win1").denyResize();
-      var formObj = [
-                 {type:"settings", offsetTop:12,name:"connectionInfo",labelAlign:"left"},
-               {type:"input",name:"uiID", label:"아이디 : ",required:true},
-               {type:"password",name:"uiPwd", label:"비밀번호 : ",required:true},
-               {type: "block", blockOffset: 0, list: [
-                  {type: "button", name:"loginBtn",value: "로그인"},
-                  {type: "newcolumn"},
-                  {type: "button", name:"cancelBtn",value: "취소"},
-                  {type: "newcolumn"},
-                  {type: "button", name:"signupBtn",value: "회원가입"}
-               ]}
-         ];
-      var form = popW.attachForm(formObj,true);
-      
-      form.attachEvent("onButtonClick",function(id){
-         if(id=="loginBtn"){
-            if(form.validate()){
-               form.send("${root}/user/login","POST",callback);                 
-            }
-         }else if(id=="cancelBtn"){
-            form.clear();
-         }else if(id=="signupBtn"){ 
-        	 document.location.href="${root}/path/user/signup";
-         }         
-      });
-      
-      if(${isLogin}){
-    	  popW.hide();
-      }
-      
-   })
-   
+<script>
+	var winF,popW;
+	$(document).ready(function(){
+		winF = new dhtmlXWindows();
+		winF.attachViewportTo("winVP");
+		popW = winF.createWindow("win1",20,30,320,300);
+		//popW.hide(); 
+		popW.button("close").hide();
+		popW.button("minmax").hide();
+		popW.button("park").hide();
+		popW.setText("Login");
+		
+		winF.window("win1").centerOnScreen();
+		winF.window("win1").denyMove();
+		winF.window("win1").denyResize();
+		var formObj = [
+			{type:"settings", offsetTop:12, name:"userInfo",labelAlign:"left"},			
+			{type:"input",name:"uiID", label:"아이디 : ",required:true},
+			{type:"password",name:"uiPwd", label:"비밀번호 : ",required:true},				
+			{type: "block", blockOffset: 0, list: [
+				{type: "button", name:"loginBtn",value: "로그인"},
+				{type: "newcolumn"},
+				{type: "button", name:"cancelBtn",value: "취소"},
+				{type: "newcolumn"},
+				{type: "button", name:"signupBtn",value: "회원가입"}
+			]}
+		];
+		var form = popW.attachForm(formObj,true);
+		form.attachEvent("onButtonClick",function(id){
+			if(id=="loginBtn"){
+				if(form.validate()){
+					form.send("${root}/user/login","POST",callback);                 
+				}
+			}else if(id=="cancelBtn"){
+				form.clear();
+			}else if(id=="signupBtn"){ 
+				document.location.href="${root}/path/user/signup";
+			}         
+		});
+		
+		if(${isLogin}){
+			popW.hide();
+		}
+	})
+
 	function callback(loader, res){	
 		if(loader.xmlDoc.status == 200){
 			var res = JSON.parse(res);
 			alert(res.msg);
-			if(res.loginOk){
-				popW.hide();
-				
-				var mygrid = new dhtmlXGridObject('winVP');
-				mygrid.setImagePath("${dPath}/imgs/");                 
-				mygrid.setHeader("번호,이름,아이디,비밀번호,이메일,권리자권한");
-				mygrid.setInitWidths("80,150,150,150,250,150");          
-				mygrid.setColAlign("left,left,left,left,left,left");       
-				mygrid.setColTypes("ro,ed,ed,ed,ed,ed");               
-				mygrid.setColSorting("int,str,str,str,str,int");          
-				mygrid.setColumnIds("uiNo,uiName,uiID,uiPwd,uiEmail,admin");
-				mygrid.init();    
-				
-				var au2 = new AjaxUtil("${root}/user/list",null,"GET","json");	
-				
-				function listCallback(res){	
-					console.log(res.userList);
-					
-					mygrid.parse({data:res}, "js");				
-				}
-				
-				au2.setCallbackSuccess(listCallback)
-				au2.send(); 		
-				
-				
+			if(res.loginOk){					
+				document.location.href="${root}/path/user/list";
 			}		   
-	   } 
-   }
+		} 
+	}
    
 
 </script>
