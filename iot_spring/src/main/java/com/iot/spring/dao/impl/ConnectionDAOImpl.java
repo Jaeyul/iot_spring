@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import com.iot.spring.common.dbcon.DBConnector;
 import com.iot.spring.dao.ConnectionDAO;
 import com.iot.spring.vo.ColumnsVO;
 import com.iot.spring.vo.ConnectionInfoVO;
@@ -21,18 +22,20 @@ public class ConnectionDAOImpl implements ConnectionDAO{
 	private SqlSessionFactory ssf;
 
 	@Override
-	public List<ConnectionInfoVO> selectConnectionList() {
+	public List<ConnectionInfoVO> selectConnectionList(ConnectionInfoVO ci) {
 		SqlSession ss = ssf.openSession();
-		List<ConnectionInfoVO> ConnectionList = ss.selectList("connection.selectConnectionInfo");
+		List<ConnectionInfoVO> ConnectionList = ss.selectList("connection.selectConnectionInfo", ci);
 		ss.close();
 		return ConnectionList;
 	}
 
 	@Override
-	public ConnectionInfoVO selectConnection(ConnectionInfoVO ci) {
+	public ConnectionInfoVO selectConnection(int ciNo) {
+		
 		SqlSession ss = ssf.openSession();
-		ConnectionInfoVO civ = ss.selectOne("connection.selectConnectionInfoOne", ci);
-		return civ;
+		ConnectionInfoVO ci = ss.selectOne("connection.selectConnectionInfoWithCiNo", ciNo);
+		ss.close();
+		return ci;
 	}
 
 	@Override
@@ -44,19 +47,17 @@ public class ConnectionDAOImpl implements ConnectionDAO{
 		return result;
 	}
 
+	
+
 	@Override
-	public List<Map<String, Object>> selectDatabaseList() {
-		SqlSession ss = ssf.openSession();
-		List<Map<String, Object>> databaseList = ss.selectList("connection.selectDatabase");
-		ss.close();
-		return databaseList;
+	public List<Map<String, Object>> selectDatabaseList(SqlSession ss) throws Exception {
+		return ss.selectList("connection.selectDatabase");
 	}
 
 	@Override
-	public List<TableVO> selectTableList(String dbName) {
-		SqlSession ss = ssf.openSession();
+	public List<TableVO> selectTableList(SqlSession ss, String dbName) {		
 		List<TableVO> tableList = ss.selectList("connection.selectTable", dbName);
-		ss.close();
+		
 		return tableList;
 	}
 

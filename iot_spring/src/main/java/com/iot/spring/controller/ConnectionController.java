@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +21,7 @@ import com.iot.spring.service.ConnectionService;
 import com.iot.spring.vo.ColumnsVO;
 import com.iot.spring.vo.ConnectionInfoVO;
 import com.iot.spring.vo.TableVO;
+import com.iot.spring.vo.UserInfoVO;
 
 @Controller
 @RequestMapping("/connection")
@@ -39,19 +42,48 @@ public class ConnectionController {
 		
 		return map;
 	}
-		
-	@RequestMapping(value="/db_list", method=RequestMethod.GET)
-	public @ResponseBody Map<String, Object> getDatabaseList(@RequestParam Map<String, Object> map) {
-		List<Map<String,Object>> dbList = cs.getDatabaseList();
-		map.put("dbList", dbList);		
+	
+	@RequestMapping(value="/list", method=RequestMethod.GET)
+	public @ResponseBody Map<String, Object> getConnectionInfoList(@RequestParam Map<String, Object> map, HttpSession hs) {
+		UserInfoVO ui = new UserInfoVO();
+		if(hs.getAttribute("user")!=null) {
+			ui = (UserInfoVO) hs.getAttribute("user");			
+		}else {
+			ui.setUiID("red");			
+		}		
+		ConnectionInfoVO ci = new ConnectionInfoVO();		
+		ci.setUiID("red");		
+		List<ConnectionInfoVO> ciList = cs.getConnectionList(ci);	
+		map.put("list", ciList);			
 		return map;
 	}	
 	
-	@RequestMapping(value="/table/{dbName}", method=RequestMethod.GET)
-	public @ResponseBody Map<String, Object> getTableList(@PathVariable("dbName") String dbName, Map<String, Object> map) {
 		
-		List<TableVO> tableList = cs.getTableList(dbName);
-		map.put("tableList", tableList);		
+	@RequestMapping(value="/db_list/{ciNo}", method=RequestMethod.GET)
+	public @ResponseBody Map<String, Object> getDatabaseList(@PathVariable("ciNo") int ciNo, Map<String, Object> map, HttpSession hs) {
+		List<Map<String, Object>> dbList;
+		try {
+			dbList = cs.getDatabaseList(hs, ciNo);
+			map.put("list", dbList);
+			map.put("parentId", ciNo);
+		} catch (Exception e) {
+			map.put("error", e.getMessage());
+			log.error("db connection error => {}",e);		
+		}
+		return map;
+	}	
+	
+	@RequestMapping(value="/tables/{dbName}/{parentId}", method=RequestMethod.GET)
+	public @ResponseBody Map<String, Object> getTableList(
+			@PathVariable("dbName") String dbName,
+			@PathVariable("parentId") String parentId,
+			HttpSession hs,
+			Map<String, Object> map) {
+		
+		log.info("dbName=>{},parentId=>{}", new Object[] {dbName,parentId});
+		List<TableVO> tableList = cs.getTableList(hs, dbName);
+		map.put("list", tableList);	
+		map.put("parentId", parentId);
 		return map;
 	}	
 	

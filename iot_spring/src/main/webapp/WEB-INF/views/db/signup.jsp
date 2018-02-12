@@ -25,6 +25,8 @@ div#winVP {
 <script>
 	var winF,popW;
 	$(document).ready(function(){
+		
+		var winF,popW;
 		winF = new dhtmlXWindows();
 		winF.attachViewportTo("winVP");
 		popW = winF.createWindow("win1",20,30,400,500);

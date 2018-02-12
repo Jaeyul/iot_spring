@@ -23,6 +23,7 @@ div#winVP {
 }
 </style>
 <script>
+
 	var winF,popW;
 	$(document).ready(function(){
 		winF = new dhtmlXWindows();

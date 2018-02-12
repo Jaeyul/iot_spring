@@ -8,7 +8,7 @@
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
 <c:set var="rPath" value="${root}/resources"></c:set>
 <c:set var="dPath" value="${rPath }/dx"></c:set>
-<c:set var="ver" value="?version=1.0.0"/>
+<c:set var="ver" value="?version=1.0.2"/>
 <c:set var="isLogin" value="${(empty sessionScope.isLogin)?false:sessionScope.isLogin}"/>
 <c:set var="Log" value="${(empty sessionScope.isLogin)?'login':'logout'}"/>
 
